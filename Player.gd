@@ -15,6 +15,14 @@ onready var my_sprite = $AnimatedSprite
 onready var coy_timer = $CoyoteTimer
 onready var pre_timer = $PreemptiveTimer
 
+onready var baguette = $Baguette
+onready var baguette_sprite = $Baguette/Sprite
+onready var baguette_collision = $Baguette/CollisionShape2D
+onready var baguette_timer = $Baguette/AttackTimer
+
+func _ready():
+	baguette_timer.connect("timeout", self, "_on_BaguetteTimer_timeout")
+
 func check_jump(impulse, prev_velocity):
 	if Input.is_action_just_pressed("ui_up"): # or is_on_wall() to add wall jumps
 		pre_timer.start()
@@ -42,8 +50,12 @@ func _physics_process(delta):
 		
 		if input_vector.x > 0:
 			my_sprite.scale.x = 1
+			baguette.position.x = 8
+			baguette_sprite.scale.x = 1
 		elif input_vector.x < 0:
 			my_sprite.scale.x = -1
+			baguette.position.x = -8
+			baguette_sprite.scale.x = -1
 
 	else:
 		velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
@@ -54,4 +66,10 @@ func _physics_process(delta):
 
 func _unhandled_input(event):
 	if event.is_action_pressed("attack"):
-		print("attack")
+		baguette_timer.start()
+		baguette_sprite.visible = true
+		baguette_collision.disabled = false
+
+func _on_BaguetteTimer_timeout():
+	baguette_sprite.visible = false
+	baguette_collision.disabled = true
