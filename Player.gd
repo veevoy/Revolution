@@ -21,7 +21,7 @@ onready var baguette = $Baguette
 onready var baguette_collision = $Baguette/CollisionShape2D
 onready var hurtbox = $Hurtbox
 
-const Sesame = preload("Projectile.tscn")
+const Sesame = preload("Sesame.tscn")
 
 enum Weapon {
 	TRADITION,

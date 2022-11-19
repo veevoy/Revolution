@@ -5,19 +5,20 @@ extends Area2D
 # var a = 2
 # var b = "text"
 
-const GRAVITY = 15
-const FRICTION = 10
+export(int) var bullet_gravity = 15
+export(int) var bullet_friction = 10
 
 var velocity = Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	velocity.y += GRAVITY
-	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
+	velocity.y += bullet_gravity
+	if bullet_friction > 0:
+		velocity.x = move_toward(velocity.x, 0, bullet_friction * delta)
 	global_position = global_position + velocity*delta
 
 func _on_Projectile_area_entered(_area):

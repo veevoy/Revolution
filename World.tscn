@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/tiles_example.png" type="Texture" id=2]
 [ext_resource path="res://SwordEnemy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://HarquebusEnemy.tscn" type="PackedScene" id=4]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 0, 0, 8, 0, 8, 8, 0, 8 )
@@ -193,3 +194,6 @@ tile_data = PoolIntArray( -13, 0, 0, -12, 0, 0, -11, 0, 0, -10, 0, 0, -9, 0, 0, 
 position = Vector2( 45, 4 )
 current = true
 smoothing_enabled = true
+
+[node name="HarquebusEnemy" parent="." instance=ExtResource( 4 )]
+position = Vector2( -84, -17 )
