@@ -12,16 +12,22 @@ var input_vector = Vector2()
 var velocity = Vector2()
 
 onready var my_sprite = $AnimatedSprite
+onready var my_collision = $CollisionShape2D
 onready var coy_timer = $CoyoteTimer
 onready var pre_timer = $PreemptiveTimer
 
 onready var baguette = $Baguette
-onready var baguette_sprite = $Baguette/Sprite
 onready var baguette_collision = $Baguette/CollisionShape2D
 onready var baguette_timer = $Baguette/AttackTimer
 
-func _ready():
-	baguette_timer.connect("timeout", self, "_on_BaguetteTimer_timeout")
+enum Weapon {
+	TRADITION,
+	SESAME,
+	FRENCH
+}
+
+var weapon = Weapon.TRADITION
+var attacking = false
 
 func check_jump(impulse, prev_velocity):
 	if Input.is_action_just_pressed("ui_up"): # or is_on_wall() to add wall jumps
@@ -50,12 +56,12 @@ func _physics_process(delta):
 		
 		if input_vector.x > 0:
 			my_sprite.scale.x = 1
-			baguette.position.x = 8
-			baguette_sprite.scale.x = 1
+			baguette.position.x = 10
+			my_collision.position.x = -2.5
 		elif input_vector.x < 0:
 			my_sprite.scale.x = -1
-			baguette.position.x = -8
-			baguette_sprite.scale.x = -1
+			baguette.position.x = -10
+			my_collision.position.x = 2.5
 
 	else:
 		velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
@@ -63,13 +69,23 @@ func _physics_process(delta):
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
+func set_animation(name):
+	match weapon:
+		Weapon.TRADITION:
+			my_sprite.play("Tradition"+name)
+		Weapon.SESAME:
+			my_sprite.play("Sesame"+name)
+		Weapon.FRENCH:
+			my_sprite.play("French"+name)
 
 func _unhandled_input(event):
 	if event.is_action_pressed("attack"):
-		baguette_timer.start()
-		baguette_sprite.visible = true
+		attacking = true
+		set_animation("Attack")
 		baguette_collision.disabled = false
 
-func _on_BaguetteTimer_timeout():
-	baguette_sprite.visible = false
-	baguette_collision.disabled = true
+
+func _on_AnimatedSprite_animation_finished():
+	if attacking:
+		set_animation("Idle")
+		baguette_collision.disabled = true
