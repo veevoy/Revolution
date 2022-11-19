@@ -15,10 +15,12 @@ var health = 2
 
 onready var my_sprite = $AnimatedSprite
 onready var my_raycast = $RayCast2D
+onready var my_collision = $CollisionShape2D
 onready var sword = $Sword
 onready var hitbox_collision = $Sword/CollisionShape2D
 onready var detection_area = $DetectionZone
 onready var response_timer = $ResponseTimer
+onready var hurtbox = $Hurtbox
 
 enum Side {
 	LEFT = -1,
@@ -55,8 +57,10 @@ func _physics_process(delta):
 func turn(new_side):
 	if side != new_side:
 		my_sprite.scale.x = -my_sprite.scale.x
-		sword.position.x = -sword.position.x
 		my_raycast.position.x = -my_raycast.position.x
+		my_collision.position.x = -my_collision.position.x
+		sword.position.x = -sword.position.x
+		hurtbox.position.x = -hurtbox.position.x
 		detection_area.position.x = -detection_area.position.x
 		side = new_side
 

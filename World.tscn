@@ -181,7 +181,7 @@ position = Vector2( 45, 4 )
 remote_path = NodePath("../../Camera2D")
 
 [node name="SwordEnemy" parent="." instance=ExtResource( 3 )]
-position = Vector2( -57, 21 )
+position = Vector2( -47, 23 )
 
 [node name="Ground" type="TileMap" parent="."]
 tile_set = SubResource( 1 )
