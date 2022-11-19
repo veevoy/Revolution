@@ -19,6 +19,7 @@ extents = Vector2( 3, 3.5 )
 extents = Vector2( 4, 2 )
 
 [node name="Player" type="KinematicBody2D"]
+collision_layer = 3
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
