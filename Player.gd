@@ -91,6 +91,12 @@ func turn(new_side):
 		my_collision.position.x = -my_collision.position.x 
 		sesame_spawn.position.x = -sesame_spawn.position.x
 		side = new_side
+		match side:
+			Side.LEFT:
+				position.x -= 8
+			Side.RIGHT:
+				position.x += 8
+				print("right")
 
 func _unhandled_input(event):
 	if event.is_action_pressed("attack"):
