@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/placeholder baguette.png-e82c7c08b49ac8eeb03ca475858fefca.stex"
+path="res://.import/placeholder enemy.png-3718aa4e59b2c8d2018a2db3561b3cad.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/placeholder baguette.png"
-dest_files=[ "res://.import/placeholder baguette.png-e82c7c08b49ac8eeb03ca475858fefca.stex" ]
+source_file="res://Sprites/placeholder enemy.png"
+dest_files=[ "res://.import/placeholder enemy.png-3718aa4e59b2c8d2018a2db3561b3cad.stex" ]
 
 [params]
 

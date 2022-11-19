@@ -1,7 +1,8 @@
-[gd_scene load_steps=78 format=2]
+[gd_scene load_steps=81 format=2]
 
-[ext_resource path="res://assets/placeholder char.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/placeholder char.png" type="Texture" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
+[ext_resource path="res://Hurtbox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Sprites/MainCharacter/WithBaguetteTradition/Attack/MainChar_WithBaguetteTradition_Attack-Sheet.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/MainCharacter/WithBaguetteSesame/Attack/MainChar_WithBaguetteSesame_Attack-Sheet.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/MainCharacter/WithBaguetteTradition/Idle/MainChar_WithBaguetteTradition_Idle-Sheet.png" type="Texture" id=6]
@@ -11,6 +12,7 @@
 [ext_resource path="res://Sprites/MainCharacter/WithBaguetteSesame/Walk/MainChar_WithBaguetteSesame_Walk.aseprite-Sheet.png" type="Texture" id=10]
 [ext_resource path="res://Sprites/MainCharacter/withBaguetteFrancaise/Walk/MainChar_WithBaguetteFrancaise_Walk.aseprite-Sheet.png" type="Texture" id=11]
 [ext_resource path="res://Sprites/MainCharacter/withBaguetteFrancaise/Attack/MainChar_WithBaguetteFrancaise_Attack-Sheet.png" type="Texture" id=12]
+[ext_resource path="res://Hitbox.tscn" type="PackedScene" id=13]
 
 [sub_resource type="AtlasTexture" id=11]
 atlas = ExtResource( 12 )
@@ -323,14 +325,16 @@ extents = Vector2( 5.5, 5.5 )
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 7.5, 6 )
 
+[sub_resource type="RectangleShape2D" id=67]
+extents = Vector2( 5.5, 5.5 )
+
 [node name="Player" type="KinematicBody2D"]
-collision_layer = 3
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "TraditionIdle"
-frame = 1
+frame = 7
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -345,16 +349,34 @@ one_shot = true
 wait_time = 0.1
 one_shot = true
 
-[node name="Baguette" type="Area2D" parent="."]
-position = Vector2( 10.5, 1 )
-collision_layer = 0
+[node name="Baguette" parent="." instance=ExtResource( 13 )]
+position = Vector2( 11.5, 0 )
 collision_mask = 4
+__meta__ = {
+"_edit_group_": true
+}
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Baguette"]
+[node name="CollisionShape2D" parent="Baguette" index="0"]
 shape = SubResource( 3 )
 disabled = true
 
 [node name="SesameSpawn" type="Position2D" parent="."]
 position = Vector2( 14, -5 )
 
+[node name="Hurtbox" parent="." instance=ExtResource( 3 )]
+position = Vector2( -3.5, 3.5 )
+collision_layer = 2
+collision_mask = 0
+__meta__ = {
+"_edit_group_": true
+}
+hb_owner = "player"
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+shape = SubResource( 67 )
+
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+
+[editable path="Baguette"]
+[editable path="Hurtbox"]

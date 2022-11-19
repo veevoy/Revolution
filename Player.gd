@@ -19,7 +19,7 @@ onready var sesame_spawn = $SesameSpawn
 
 onready var baguette = $Baguette
 onready var baguette_collision = $Baguette/CollisionShape2D
-onready var baguette_timer = $Baguette/AttackTimer
+onready var hurtbox = $Hurtbox
 
 const Sesame = preload("Projectile.tscn")
 
@@ -64,9 +64,9 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, input_vector.x * MAX_SPEED, ACCELERATION * delta)
 		
 		if input_vector.x > 0:
-			turn_right()
+			turn(Side.RIGHT)
 		elif input_vector.x < 0:
-			turn_left()
+			turn(Side.LEFT)
 
 	else:
 		velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
@@ -83,19 +83,14 @@ func set_animation(name):
 		Weapon.FRENCH:
 			my_sprite.play("French"+name)
 
-func turn_right():
-	my_sprite.scale.x = 1
-	baguette.position.x = 10.5
-	my_collision.position.x = -2.5
-	sesame_spawn.position.x = 14
-	side = Side.RIGHT
-	
-func turn_left():
-	my_sprite.scale.x = -1
-	baguette.position.x = -10.5
-	my_collision.position.x = 2.5
-	sesame_spawn.position.x = -14
-	side = Side.LEFT
+func turn(new_side):
+	if side != new_side:
+		my_sprite.scale.x = -my_sprite.scale.x
+		baguette.position.x = -baguette.position.x
+		hurtbox.position.x = -hurtbox.position.x
+		my_collision.position.x = -my_collision.position.x 
+		sesame_spawn.position.x = -sesame_spawn.position.x
+		side = new_side
 
 func _unhandled_input(event):
 	if event.is_action_pressed("attack"):
@@ -122,3 +117,7 @@ func _on_AnimatedSprite_animation_finished():
 		set_animation("Idle")
 		baguette_collision.disabled = true
 		attacking = false
+
+
+func _on_Hurtbox_area_entered(area):
+	print("OUCH")
