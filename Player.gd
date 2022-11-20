@@ -171,8 +171,9 @@ func _on_AnimatedSprite_animation_finished():
 		attacking = false
 
 func _on_Hurtbox_area_entered(area):
-	sfx_hit.play()
-	print("OUCH")
+	if "damage" in area and area.damage > 0:
+		sfx_hit.play()
+		print("OUCH")
 
 func _on_Dynamite_exploded():
 	dynamite_thrown = false
