@@ -5,7 +5,7 @@ const FRICTION = 10
 
 onready var my_sprite = $AnimatedSprite
 onready var explosion = $ExplosionHurtbox
-onready var explosion_collision = $ExplosionHurtbox/CollisionShape2D
+onready var explosion_collision = $ExplosionHitbox/CollisionShape2D
 onready var explosion_timer = $ExplosionTimer
 
 var velocity = Vector2.ZERO
@@ -16,7 +16,7 @@ func set_type(new_type):
 	if new_type == "french":
 		my_sprite.play("French")
 		explosion_collision.set_deferred("radius", 50)
-		explosion.hb_owner = "french_dynamite"
+		explosion.hit_owner = "french_dynamite"
 
 func _physics_process(delta):
 	velocity.y += GRAVITY

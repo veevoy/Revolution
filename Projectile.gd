@@ -7,7 +7,7 @@ extends Area2D
 
 export(int) var bullet_gravity = 15
 export(int) var bullet_friction = 10
-export var hb_owner = ""
+export var hit_owner = ""
 
 var velocity = Vector2.ZERO
 
@@ -15,8 +15,8 @@ var velocity = Vector2.ZERO
 func _ready():
 	pass
 
-func config(new_hb_owner : String, new_global_position : Vector2, new_velocity : Vector2, new_gravity : int, new_friction : int) -> void:
-	hb_owner = new_hb_owner
+func config(new_hit_owner : String, new_global_position : Vector2, new_velocity : Vector2, new_gravity : int, new_friction : int) -> void:
+	hit_owner = new_hit_owner
 	global_position = new_global_position
 	velocity = new_velocity
 	bullet_gravity = new_gravity

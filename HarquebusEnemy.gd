@@ -47,7 +47,7 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 	for area in detection_area.get_overlapping_areas():
-		if "hb_owner" in area and area.hb_owner == "player":
+		if "hurt_owner" in area and area.hurt_owner == "player":
 			if bullet_timer.is_stopped():
 				my_sprite.play("Attack")
 				bullet_timer.start()

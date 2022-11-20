@@ -48,7 +48,7 @@ func _physics_process(delta):
 	
 	need_attacking = false
 	for area in detection_area.get_overlapping_areas():
-		if "hb_owner" in area and area.hb_owner == "player":
+		if "hurt_owner" in area and area.hurt_owner == "player":
 			need_attacking = true
 	
 	if need_attacking and not attacking and response_timer.is_stopped():

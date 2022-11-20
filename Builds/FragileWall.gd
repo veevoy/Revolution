@@ -11,5 +11,6 @@ func _ready():
 		french_sprite.visible = true
 
 func _on_Hurtbox_area_entered(area):
-	if "hb_owner" in area and area.hb_owner == vulnerability:
+	print(area, area.hit_owner)
+	if "hit_owner" in area and area.hit_owner == vulnerability:
 		queue_free()

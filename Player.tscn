@@ -335,7 +335,7 @@ script = ExtResource( 2 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "TraditionIdle"
-frame = 5
+frame = 2
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -356,6 +356,7 @@ collision_mask = 4
 __meta__ = {
 "_edit_group_": true
 }
+hit_owner = "player"
 
 [node name="CollisionShape2D" parent="Baguette" index="0"]
 shape = SubResource( 3 )
@@ -371,7 +372,7 @@ collision_mask = 0
 __meta__ = {
 "_edit_group_": true
 }
-hb_owner = "player"
+hurt_owner = "player"
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 shape = SubResource( 67 )

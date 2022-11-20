@@ -30,10 +30,10 @@ extents = Vector2( 1, 1 )
 [node name="Sesame" type="Area2D"]
 collision_mask = 12
 script = ExtResource( 1 )
+hit_owner = "sesame"
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
-frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
