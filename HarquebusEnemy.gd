@@ -66,13 +66,15 @@ func turn(new_side):
 
 func shoot():
 	var bullet = Bullet.instance()
-	bullet.type = "bullet"
-	bullet.bullet_gravity = 0
-	bullet.bullet_friction = 0
-	bullet.global_position = bullet_spawn.global_position
 	var dirv = Vector2.ZERO
 	dirv = Vector2.RIGHT if side == Side.RIGHT else Vector2.LEFT
-	bullet.velocity = dirv.normalized() * 350
+	bullet.config(
+		"bullet",
+		bullet_spawn.global_position,
+		dirv.normalized() * 350,
+		0,
+		0
+	)
 	get_parent().add_child(bullet)
 
 func _on_Hurtbox_area_entered(area):

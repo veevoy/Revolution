@@ -6,7 +6,7 @@ onready var open_collision = $StaticBody2D/OpenCollision
 var open = false
 
 func _on_Bridge_area_entered(area):
-	if not open and "type" in area and area.type == "sesame":
+	if not open and "hb_owner" in area and area.hb_owner == "sesame":
 		sprite.play("Open")
 		open = true
 		set_collision_layer_bit(0, true)

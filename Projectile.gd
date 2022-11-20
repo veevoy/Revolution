@@ -7,13 +7,20 @@ extends Area2D
 
 export(int) var bullet_gravity = 15
 export(int) var bullet_friction = 10
-export var type = ""
+export var hb_owner = ""
 
 var velocity = Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
+
+func config(new_hb_owner : String, new_global_position : Vector2, new_velocity : Vector2, new_gravity : int, new_friction : int) -> void:
+	hb_owner = new_hb_owner
+	global_position = new_global_position
+	velocity = new_velocity
+	bullet_gravity = new_gravity
+	bullet_friction = new_friction
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
