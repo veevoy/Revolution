@@ -7,6 +7,7 @@ extends Area2D
 
 export(int) var bullet_gravity = 15
 export(int) var bullet_friction = 10
+export var type = ""
 
 var velocity = Vector2.ZERO
 
@@ -22,7 +23,8 @@ func _physics_process(delta):
 	global_position = global_position + velocity*delta
 
 func _on_Projectile_area_entered(_area):
-	queue_free()
+#	queue_free()
+	pass
 
 func _on_Projectile_body_entered(_body):
 	queue_free()

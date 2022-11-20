@@ -66,6 +66,7 @@ func turn(new_side):
 
 func shoot():
 	var bullet = Bullet.instance()
+	bullet.type = "bullet"
 	bullet.bullet_gravity = 0
 	bullet.bullet_friction = 0
 	bullet.global_position = bullet_spawn.global_position

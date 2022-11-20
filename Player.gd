@@ -104,6 +104,7 @@ func _unhandled_input(event):
 		baguette_collision.disabled = false
 		if not attacking and weapon == Weapon.SESAME:
 			var sesame = Sesame.instance()
+			sesame.type = "sesame"
 			sesame.global_position = sesame_spawn.global_position
 			var dirv = Vector2.ZERO
 			if Input.is_action_pressed("ui_down"):
