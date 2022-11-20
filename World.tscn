@@ -298,7 +298,7 @@ shape = SubResource( 11 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Objects/Loots/FloatingLoot4"]
 frames = SubResource( 10 )
-frame = 5
+frame = 1
 playing = true
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
