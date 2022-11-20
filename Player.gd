@@ -69,9 +69,15 @@ func _physics_process(delta):
 			turn(Side.RIGHT)
 		elif input_vector.x < 0:
 			turn(Side.LEFT)
+			
+		if not attacking:
+			set_animation("Walk")
 
 	else:
 		velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
+		
+		if velocity.x == 0 and not attacking: 
+			set_animation("Idle")
 
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
