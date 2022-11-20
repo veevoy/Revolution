@@ -16,6 +16,7 @@ onready var my_collision = $CollisionShape2D
 onready var coy_timer = $CoyoteTimer
 onready var pre_timer = $PreemptiveTimer
 onready var sesame_spawn = $SesameSpawn
+onready var french_laser_spawn = $FrenchLaserSpawn
 
 onready var baguette = $Baguette
 onready var baguette_collision = $Baguette/CollisionShape2D
@@ -27,8 +28,9 @@ onready var sfx_french = $FrenchUpgrade
 onready var sfx_hit = $Hit
 onready var sfx_death = $Death
 
-const Sesame = preload("Sesame.tscn")
+const Sesame = preload("res://Sesame.tscn")
 const Dynamite = preload("res://Dynamite.tscn")
+const FrenchLaser = preload("res://FrenchLaser.tscn")
 
 enum Weapon {
 	TRADITION,
@@ -111,6 +113,7 @@ func turn(new_side):
 		hurtbox.position.x = -hurtbox.position.x
 		my_collision.position.x = -my_collision.position.x 
 		sesame_spawn.position.x = -sesame_spawn.position.x
+		french_laser_spawn.position.x = -french_laser_spawn.position.x
 		side = new_side
 		match side:
 			Side.LEFT:
@@ -133,15 +136,16 @@ func _unhandled_input(event):
 				else:
 					dirv = Vector2(0.25,-1) if side == Side.RIGHT else Vector2(-0.25, -1)
 
-				sesame.config(
-					"sesame",
-					sesame_spawn.global_position,
-					dirv.normalized() * 400,
-					15,
-					10
-				)
+				sesame.config(sesame_spawn.global_position, dirv.normalized() * 400)
 
 				get_parent().add_child(sesame)
+			if weapon == Weapon.FRENCH:
+				var french_laser = FrenchLaser.instance()
+
+				var dirv = Vector2(1, 0) if side == Side.RIGHT else Vector2(-1, 0)
+				french_laser.config(french_laser_spawn.global_position, dirv.normalized() * 400)
+
+				get_parent().add_child(french_laser)
 		attacking = true
 	
 	if event.is_action_pressed("test"):
@@ -181,7 +185,7 @@ func loot(type_of_upgrade):
 			sfx_sesame.play()
 		"baguette_french":
 			weapon = Weapon.FRENCH
-			baguette.damage = 2
+			baguette.damage = 3
 			set_animation("Idle")
 			sfx_french.play()
 		"dynamite_single":

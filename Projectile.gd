@@ -8,6 +8,7 @@ extends Area2D
 export(int) var bullet_gravity = 15
 export(int) var bullet_friction = 10
 export var hit_owner = ""
+export var damage = 1
 
 var velocity = Vector2.ZERO
 
@@ -15,12 +16,9 @@ var velocity = Vector2.ZERO
 func _ready():
 	pass
 
-func config(new_hit_owner : String, new_global_position : Vector2, new_velocity : Vector2, new_gravity : int, new_friction : int) -> void:
-	hit_owner = new_hit_owner
+func config(new_global_position : Vector2, new_velocity : Vector2) -> void:
 	global_position = new_global_position
 	velocity = new_velocity
-	bullet_gravity = new_gravity
-	bullet_friction = new_friction
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):

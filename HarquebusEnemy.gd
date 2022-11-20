@@ -81,13 +81,7 @@ func shoot():
 	var bullet = Bullet.instance()
 	var dirv = Vector2.ZERO
 	dirv = Vector2.RIGHT if side == Side.RIGHT else Vector2.LEFT
-	bullet.config(
-		"bullet",
-		bullet_spawn.global_position,
-		dirv.normalized() * 350,
-		0,
-		0
-	)
+	bullet.config(bullet_spawn.global_position, dirv.normalized() * 350)
 	get_parent().add_child(bullet)
 
 func _on_Hurtbox_area_entered(area):

@@ -112,14 +112,17 @@ motion_mirroring = Vector2( 625, 0 )
 texture = ExtResource( 13 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 87, 38 )
+position = Vector2( 232, -117 )
 z_index = 2
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 87, 38 )
+position = Vector2( 232, -117 )
 current = true
 smoothing_enabled = true
 
@@ -341,7 +344,7 @@ shape = SubResource( 11 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Objects/Loots/FloatingLoot4"]
 frames = SubResource( 10 )
-frame = 5
+frame = 1
 playing = true
 
 [node name="Level" parent="." instance=ExtResource( 2 )]
