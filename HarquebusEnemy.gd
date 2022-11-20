@@ -52,13 +52,14 @@ func _physics_process(delta):
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
-	for area in detection_area.get_overlapping_areas():
-		if "hurt_owner" in area and area.hurt_owner == "player":
-			if bullet_timer.is_stopped():
-				my_sprite.play("Attack")
-				bullet_timer.start()
-				shoot()
-				attacking = true
+	if not dying:
+		for area in detection_area.get_overlapping_areas():
+			if "hurt_owner" in area and area.hurt_owner == "player":
+				if bullet_timer.is_stopped():
+					my_sprite.play("Attack")
+					bullet_timer.start()
+					shoot()
+					attacking = true
 
 func turn(new_side):
 	if side != new_side:
@@ -93,7 +94,7 @@ func _on_Hurtbox_area_entered(area):
 	if health > 0:
 		health -= area.damage
 		sfx_hit.play()
-	elif not dying:
+	if health <= 0 and not dying:
 		my_sprite.visible = false
 		sfx_death.play()
 		dying = true
@@ -103,3 +104,7 @@ func _on_AnimatedSprite_animation_finished():
 	if attacking and not dying:
 		attacking = false
 		my_sprite.play("Walk")
+
+
+func _on_Death_finished():
+	queue_free()

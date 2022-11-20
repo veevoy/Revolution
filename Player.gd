@@ -181,6 +181,7 @@ func loot(type_of_upgrade):
 			sfx_sesame.play()
 		"baguette_french":
 			weapon = Weapon.FRENCH
+			baguette.damage = 2
 			set_animation("Idle")
 			sfx_french.play()
 		"dynamite_single":

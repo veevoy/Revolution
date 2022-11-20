@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Level.tscn" type="PackedScene" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://Sprites/Buildings/Red_Building_1 .png" type="Texture" id=14]
 [ext_resource path="res://Sounds/Music/FRANCAIS.mp3" type="AudioStream" id=15]
 [ext_resource path="res://Sounds/Music/CanCan.mp3" type="AudioStream" id=16]
+[ext_resource path="res://HarquebusEnemy.tscn" type="PackedScene" id=17]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 8.0
@@ -111,19 +112,27 @@ motion_mirroring = Vector2( 625, 0 )
 texture = ExtResource( 13 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( -432, 37 )
+position = Vector2( 87, 38 )
 z_index = 2
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( -432, 37 )
+position = Vector2( 87, 38 )
 current = true
 smoothing_enabled = true
 
-[node name="SwordEnemy" parent="." instance=ExtResource( 3 )]
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="SwordEnemy" parent="Enemies" instance=ExtResource( 3 )]
 position = Vector2( -29, -23 )
+
+[node name="SwordEnemy2" parent="Enemies" instance=ExtResource( 3 )]
+position = Vector2( 145, -119 )
+
+[node name="HarquebusEnemy" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( -9, 32 )
 
 [node name="Objects" type="Node2D" parent="."]
 

@@ -30,8 +30,7 @@ func _physics_process(delta):
 	global_position = global_position + velocity*delta
 
 func _on_Projectile_area_entered(_area):
-#	queue_free()
-	pass
+	queue_free()
 
 func _on_Projectile_body_entered(_body):
 	queue_free()
