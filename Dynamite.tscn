@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Sprites/Items/Item_DynamiteFrancaise_FixedSprite.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/Items/Item_SingleDynamite_FixedSprite.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Sprites/Effects/flame.png" type="Texture" id=5]
 [ext_resource path="res://Hitbox.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Sprites/Explosions/BIGDynamiteFrancaise_Explosion-Sheet.png" type="Texture" id=7]
+[ext_resource path="res://Sounds/SFX/EXPLOSION.mp3" type="AudioStream" id=8]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -119,7 +120,11 @@ disabled = true
 frames = SubResource( 10 )
 playing = true
 
+[node name="SFXExplosion" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 8 )
+
 [connection signal="timeout" from="FuseTimer" to="." method="_on_FuseTimer_timeout"]
 [connection signal="animation_finished" from="ExplosionHitbox/AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
+[connection signal="finished" from="SFXExplosion" to="." method="_on_SFXExplosion_finished"]
 
 [editable path="ExplosionHitbox"]

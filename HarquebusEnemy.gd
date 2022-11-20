@@ -22,6 +22,10 @@ onready var bullet_timer = $BulletTimer
 onready var bullet_spawn = $BulletSpawn
 onready var hurtbox = $Hurtbox
 
+onready var sfx_shoot = $Shoot
+onready var sfx_hit = $Hit
+onready var sfx_death = $Death
+
 const Bullet = preload("Bullet.tscn")
 
 enum Side {
@@ -32,6 +36,7 @@ enum Side {
 var side = Side.RIGHT
 var int_side = 1
 var attacking = false
+var dying = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
@@ -86,12 +91,15 @@ func shoot():
 
 func _on_Hurtbox_area_entered(area):
 	if health > 0:
-		health -= 1
-	else:
-		queue_free()
+		health -= area.damage
+		sfx_hit.play()
+	elif not dying:
+		my_sprite.visible = false
+		sfx_death.play()
+		dying = true
 
 
 func _on_AnimatedSprite_animation_finished():
-	if attacking:
+	if attacking and not dying:
 		attacking = false
 		my_sprite.play("Walk")

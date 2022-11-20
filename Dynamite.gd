@@ -9,6 +9,8 @@ onready var explosion_collision = $ExplosionHitbox/CollisionShape2D
 onready var explosion_timer = $ExplosionTimer
 onready var explosion_sprite = $ExplosionHitbox/AnimatedSprite
 
+onready var sfx_explosion = $SFXExplosion
+
 var velocity = Vector2.ZERO
 var exploding = false
 var is_french = false
@@ -34,11 +36,16 @@ func _on_FuseTimer_timeout():
 		explosion_sprite.play("French")
 	else:
 		explosion_sprite.play("Single")
+	sfx_explosion.play()
 	my_sprite.visible = false
 	exploding = true
 
 func _on_AnimatedSprite_animation_finished():
 	if exploding:
+		explosion_collision.set_deferred("disabled", true)
+		explosion_sprite.visible = false
 		emit_signal("exploded")
-		queue_free()
 		exploding = false
+
+func _on_SFXExplosion_finished():
+	queue_free()
