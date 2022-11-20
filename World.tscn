@@ -9,13 +9,13 @@
 [node name="World" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 45, 29 )
+position = Vector2( -393, 23 )
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 45, 29 )
+position = Vector2( -393, 23 )
 current = true
 smoothing_enabled = true
 
