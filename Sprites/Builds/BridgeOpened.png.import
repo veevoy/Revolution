@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/BridgeOpened.png-f697e1774e1090676f5f478c7e5bd0eb.stex"
+path="res://.import/BridgeOpened.png-39116934dcc596527accd3953e2777f8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Objects/BridgeOpened.png"
-dest_files=[ "res://.import/BridgeOpened.png-f697e1774e1090676f5f478c7e5bd0eb.stex" ]
+source_file="res://Sprites/Builds/BridgeOpened.png"
+dest_files=[ "res://.import/BridgeOpened.png-39116934dcc596527accd3953e2777f8.stex" ]
 
 [params]
 

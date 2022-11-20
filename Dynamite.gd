@@ -4,6 +4,7 @@ const GRAVITY = 15
 const FRICTION = 10
 
 onready var my_sprite = $AnimatedSprite
+onready var explosion = $ExplosionHurtbox
 onready var explosion_collision = $ExplosionHurtbox/CollisionShape2D
 onready var explosion_timer = $ExplosionTimer
 
@@ -12,12 +13,10 @@ var velocity = Vector2.ZERO
 signal exploded
 
 func set_type(new_type):
-	if new_type == "single":
-		my_sprite.play("Single")
-		explosion_collision.set_deferred("radius", 30)
-	elif new_type == "french":
+	if new_type == "french":
 		my_sprite.play("French")
 		explosion_collision.set_deferred("radius", 50)
+		explosion.hb_owner = "french_dynamite"
 
 func _physics_process(delta):
 	velocity.y += GRAVITY

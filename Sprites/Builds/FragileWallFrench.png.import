@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/BridgeClosed.png-6a9e8a2e8811a45a93389b6c70026802.stex"
+path="res://.import/FragileWallFrench.png-efa20ee6476528bd595442ad47610fe4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Objects/BridgeClosed.png"
-dest_files=[ "res://.import/BridgeClosed.png-6a9e8a2e8811a45a93389b6c70026802.stex" ]
+source_file="res://Sprites/Builds/FragileWallFrench.png"
+dest_files=[ "res://.import/FragileWallFrench.png-efa20ee6476528bd595442ad47610fe4.stex" ]
 
 [params]
 

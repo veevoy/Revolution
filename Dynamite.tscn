@@ -45,7 +45,7 @@ autostart = true
 [node name="ExplosionHurtbox" parent="." instance=ExtResource( 4 )]
 collision_layer = 0
 collision_mask = 14
-hb_owner = "dynamite"
+hb_owner = "single_dynamite"
 
 [node name="CollisionShape2D" parent="ExplosionHurtbox" index="0"]
 shape = SubResource( 2 )
