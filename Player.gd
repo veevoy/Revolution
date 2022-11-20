@@ -21,6 +21,12 @@ onready var baguette = $Baguette
 onready var baguette_collision = $Baguette/CollisionShape2D
 onready var hurtbox = $Hurtbox
 
+onready var sfx_swing = $Swing
+onready var sfx_sesame = $SesameUpgrade
+onready var sfx_french = $FrenchUpgrade
+onready var sfx_hit = $Hit
+onready var sfx_death = $Death
+
 const Sesame = preload("Sesame.tscn")
 const Dynamite = preload("res://Dynamite.tscn")
 
@@ -116,24 +122,26 @@ func _unhandled_input(event):
 	if event.is_action_pressed("attack"):
 		set_animation("Attack")
 		baguette_collision.disabled = false
-		if not attacking and (weapon == Weapon.SESAME or weapon == Weapon.FRENCH):
-			var sesame = Sesame.instance()
+		if not attacking:
+			sfx_swing.play()
+			if weapon == Weapon.SESAME or weapon == Weapon.FRENCH:
+				var sesame = Sesame.instance()
 
-			var dirv = Vector2.ZERO
-			if Input.is_action_pressed("down"):
-				dirv = Vector2(1,-1) if side == Side.RIGHT else Vector2(-1, -1)
-			else:
-				dirv = Vector2(0.25,-1) if side == Side.RIGHT else Vector2(-0.25, -1)
+				var dirv = Vector2.ZERO
+				if Input.is_action_pressed("down"):
+					dirv = Vector2(1,-1) if side == Side.RIGHT else Vector2(-1, -1)
+				else:
+					dirv = Vector2(0.25,-1) if side == Side.RIGHT else Vector2(-0.25, -1)
 
-			sesame.config(
-				"sesame",
-				sesame_spawn.global_position,
-				dirv.normalized() * 400,
-				15,
-				10
-			)
+				sesame.config(
+					"sesame",
+					sesame_spawn.global_position,
+					dirv.normalized() * 400,
+					15,
+					10
+				)
 
-			get_parent().add_child(sesame)
+				get_parent().add_child(sesame)
 		attacking = true
 	
 	if event.is_action_pressed("test"):
@@ -159,6 +167,7 @@ func _on_AnimatedSprite_animation_finished():
 		attacking = false
 
 func _on_Hurtbox_area_entered(area):
+	sfx_hit.play()
 	print("OUCH")
 
 func _on_Dynamite_exploded():
@@ -169,9 +178,11 @@ func loot(type_of_upgrade):
 		"baguette_sesame":
 			weapon = Weapon.SESAME
 			set_animation("Idle")
+			sfx_sesame.play()
 		"baguette_french":
 			weapon = Weapon.FRENCH
 			set_animation("Idle")
+			sfx_french.play()
 		"dynamite_single":
 			dynamite_type = DynamiteType.SINGLE
 		"dynamite_french":

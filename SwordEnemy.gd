@@ -23,6 +23,10 @@ onready var detection_area = $DetectionZone
 onready var response_timer = $ResponseTimer
 onready var hurtbox = $Hurtbox
 
+onready var sfx_swing = $Swing
+onready var sfx_hit = $Hit
+onready var sfx_death = $Death
+
 enum Side {
 	LEFT = -1,
 	RIGHT = 1
@@ -32,6 +36,7 @@ var side = Side.RIGHT
 var int_side = 1
 var need_attacking = false
 var attacking = false
+var dying = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
@@ -73,19 +78,28 @@ func turn(new_side):
 
 func _on_Hurtbox_area_entered(area):
 	if health > 0:
-		health -= 1
-	else:
-		queue_free()
-
+		health -= area.damage
+		sfx_hit.play()
+	elif not dying:
+		hitbox_collision.set_deferred("disabled", true)
+		my_sprite.visible = false
+		sfx_death.play()
+		dying = true
+		
 
 func _on_AnimatedSprite_animation_finished():
-	if attacking:
-		hitbox_collision.disabled = true
+	if attacking and not dying:
+		hitbox_collision.set_deferred("disabled", true)
 		my_sprite.play("Walk")
 		attacking = false
 
 
 func _on_ResponseTime_timeout():
-	hitbox_collision.disabled = false
+	hitbox_collision.set_deferred("disabled", false)
 	my_sprite.play("Attack")
+	sfx_swing.play()
 	attacking = true
+
+
+func _on_Death_finished():
+	queue_free()
