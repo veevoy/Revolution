@@ -30,6 +30,12 @@ enum Weapon {
 	FRENCH
 }
 
+enum DynamiteType {
+	NONE,
+	SINGLE,
+	FRENCH
+}
+
 enum Side {
 	LEFT,
 	RIGHT
@@ -37,6 +43,7 @@ enum Side {
 
 var side = Side.RIGHT
 var weapon = Weapon.TRADITION
+var dynamite_type = DynamiteType.NONE
 var attacking = false
 var dynamite_thrown = false
 
@@ -109,7 +116,7 @@ func _unhandled_input(event):
 	if event.is_action_pressed("attack"):
 		set_animation("Attack")
 		baguette_collision.disabled = false
-		if not attacking and weapon == Weapon.SESAME:
+		if not attacking and (weapon == Weapon.SESAME or weapon == Weapon.FRENCH):
 			var sesame = Sesame.instance()
 
 			var dirv = Vector2.ZERO
@@ -133,10 +140,14 @@ func _unhandled_input(event):
 		weapon = Weapon.SESAME
 		set_animation("Idle")
 	
-	if event.is_action_pressed("dynamite") and not dynamite_thrown:
+	if event.is_action_pressed("dynamite") and dynamite_type != DynamiteType.NONE and not dynamite_thrown:
 		dynamite_thrown = true
 		var dynamite = Dynamite.instance()
-		dynamite.call_deferred("set_type", "single")
+		match dynamite_type:
+			DynamiteType.SINGLE:
+				dynamite.call_deferred("set_type", "single")
+			DynamiteType.FRENCH:
+				dynamite.call_deferred("set_type", "french")
 		dynamite.global_position = global_position
 		dynamite.connect("exploded", self, "_on_Dynamite_exploded")
 		get_parent().add_child(dynamite)
@@ -152,3 +163,16 @@ func _on_Hurtbox_area_entered(area):
 
 func _on_Dynamite_exploded():
 	dynamite_thrown = false
+
+func loot(type_of_upgrade):
+	match type_of_upgrade:
+		"baguette_sesame":
+			weapon = Weapon.SESAME
+			set_animation("Idle")
+		"baguette_french":
+			weapon = Weapon.FRENCH
+			set_animation("Idle")
+		"dynamite_single":
+			dynamite_type = DynamiteType.SINGLE
+		"dynamite_french":
+			dynamite_type = DynamiteType.FRENCH

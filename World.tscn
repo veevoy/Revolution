@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Level.tscn" type="PackedScene" id=2]
@@ -6,6 +6,10 @@
 [ext_resource path="res://Builds/Bridge.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Builds/FragileWall.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Builds/Elevator.tscn" type="PackedScene" id=6]
+[ext_resource path="res://FloatingLoot.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Sprites/Items/Item_BaguetteSesame_FixedSprite.png" type="Texture" id=8]
+
+[sub_resource type="RectangleShape2D" id=1]
 
 [node name="World" type="Node2D"]
 
@@ -40,3 +44,15 @@ position = Vector2( -76, 44 )
 
 [node name="Elevator" parent="." instance=ExtResource( 6 )]
 position = Vector2( -789, 27 )
+
+[node name="FloatingLoot" parent="." instance=ExtResource( 7 )]
+position = Vector2( -471, 5 )
+type_of_upgrade = "baguette_sesame"
+
+[node name="CollisionShape2D" parent="FloatingLoot" index="0"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="FloatingLoot"]
+texture = ExtResource( 8 )
+
+[editable path="FloatingLoot"]
