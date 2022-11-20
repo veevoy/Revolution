@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Sprites/Builds/ElevatorOpened.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Builds/ElevatorClosed.png" type="Texture" id=2]
+[ext_resource path="res://Builds/Bridge.gd" type="Script" id=3]
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "Closed",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "Open",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 4.0
+height = 64.0
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 12, 4 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 12, 4 )
+
+[node name="Elevator" type="Area2D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource( 3 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 17, -31 )
+frames = SubResource( 5 )
+animation = "Closed"
+
+[node name="TriggerCollision" type="CollisionShape2D" parent="."]
+position = Vector2( 17, -59 )
+shape = SubResource( 6 )
+
+[node name="Bridge" type="Node2D" parent="."]
+
+[node name="ClosedStaticBody" type="StaticBody2D" parent="."]
+
+[node name="ClosedCollision" type="CollisionShape2D" parent="ClosedStaticBody"]
+position = Vector2( 17, -19 )
+shape = SubResource( 8 )
+
+[node name="OpenStaticBody" type="StaticBody2D" parent="."]
+
+[node name="OpenCollision" type="CollisionShape2D" parent="OpenStaticBody"]
+position = Vector2( 17, 29 )
+shape = SubResource( 7 )
+disabled = true
+
+[connection signal="area_entered" from="." to="." method="_on_Bridge_area_entered"]

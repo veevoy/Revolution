@@ -1,3 +1,3 @@
 extends Area2D
 
-export var hb_owner = ""
+export var hurt_owner = ""

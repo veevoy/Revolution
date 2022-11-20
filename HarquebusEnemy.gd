@@ -14,7 +14,8 @@ var velocity = Vector2()
 var health = 2
 
 onready var my_sprite = $AnimatedSprite
-onready var my_raycast = $RayCast2D
+onready var ground_raycast = $GroundRayCast
+onready var wall_raycast = $WallRayCast
 onready var my_collision = $CollisionShape2D
 onready var detection_area = $DetectionZone
 onready var bullet_timer = $BulletTimer
@@ -34,7 +35,7 @@ var attacking = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if not my_raycast.is_colliding():
+	if not ground_raycast.is_colliding() or wall_raycast.is_colliding() or velocity.x == 0:
 		int_side = -int_side
 	velocity.y += GRAVITY
 	velocity.x = move_toward(velocity.x, int_side * MAX_SPEED, ACCELERATION * delta)
@@ -47,7 +48,7 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 	for area in detection_area.get_overlapping_areas():
-		if "hb_owner" in area and area.hb_owner == "player":
+		if "hurt_owner" in area and area.hurt_owner == "player":
 			if bullet_timer.is_stopped():
 				my_sprite.play("Attack")
 				bullet_timer.start()
@@ -57,21 +58,30 @@ func _physics_process(delta):
 func turn(new_side):
 	if side != new_side:
 		my_sprite.scale.x = -my_sprite.scale.x
-		my_raycast.position.x = -my_raycast.position.x
+		ground_raycast.position.x = -ground_raycast.position.x
+		wall_raycast.position.x = -wall_raycast.position.x
 		my_collision.position.x = -my_collision.position.x
 		hurtbox.position.x = -hurtbox.position.x
 		detection_area.position.x = -detection_area.position.x
 		bullet_spawn.position.x = -bullet_spawn.position.x
 		side = new_side
+		match side:
+			Side.LEFT:
+				position.x -= 6
+			Side.RIGHT:
+				position.x += 6
 
 func shoot():
 	var bullet = Bullet.instance()
-	bullet.bullet_gravity = 0
-	bullet.bullet_friction = 0
-	bullet.global_position = bullet_spawn.global_position
 	var dirv = Vector2.ZERO
 	dirv = Vector2.RIGHT if side == Side.RIGHT else Vector2.LEFT
-	bullet.velocity = dirv.normalized() * 350
+	bullet.config(
+		"bullet",
+		bullet_spawn.global_position,
+		dirv.normalized() * 350,
+		0,
+		0
+	)
 	get_parent().add_child(bullet)
 
 func _on_Hurtbox_area_entered(area):

@@ -9,6 +9,7 @@ extents = Vector2( 1, 1 )
 [node name="Bullet" type="Area2D"]
 collision_mask = 4
 script = ExtResource( 1 )
+hit_owner = "bullet"
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )

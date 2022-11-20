@@ -14,7 +14,8 @@ var velocity = Vector2()
 var health = 2
 
 onready var my_sprite = $AnimatedSprite
-onready var my_raycast = $RayCast2D
+onready var ground_raycast = $GroundRayCast
+onready var wall_raycast = $WallRayCast
 onready var my_collision = $CollisionShape2D
 onready var sword = $Sword
 onready var hitbox_collision = $Sword/CollisionShape2D
@@ -34,7 +35,7 @@ var attacking = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if not my_raycast.is_colliding():
+	if not ground_raycast.is_colliding() or wall_raycast.is_colliding() or velocity.x == 0:
 		int_side = -int_side
 	velocity.y += GRAVITY
 	velocity.x = move_toward(velocity.x, int_side * MAX_SPEED, ACCELERATION * delta)
@@ -48,7 +49,7 @@ func _physics_process(delta):
 	
 	need_attacking = false
 	for area in detection_area.get_overlapping_areas():
-		if "hb_owner" in area and area.hb_owner == "player":
+		if "hurt_owner" in area and area.hurt_owner == "player":
 			need_attacking = true
 	
 	if need_attacking and not attacking and response_timer.is_stopped():
@@ -57,12 +58,18 @@ func _physics_process(delta):
 func turn(new_side):
 	if side != new_side:
 		my_sprite.scale.x = -my_sprite.scale.x
-		my_raycast.position.x = -my_raycast.position.x
+		ground_raycast.position.x = -ground_raycast.position.x
+		wall_raycast.position.x = -wall_raycast.position.x
 		my_collision.position.x = -my_collision.position.x
 		sword.position.x = -sword.position.x
 		hurtbox.position.x = -hurtbox.position.x
 		detection_area.position.x = -detection_area.position.x
 		side = new_side
+		match side:
+			Side.LEFT:
+				position.x -= 6
+			Side.RIGHT:
+				position.x += 6
 
 func _on_Hurtbox_area_entered(area):
 	if health > 0:

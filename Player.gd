@@ -22,10 +22,17 @@ onready var baguette_collision = $Baguette/CollisionShape2D
 onready var hurtbox = $Hurtbox
 
 const Sesame = preload("Sesame.tscn")
+const Dynamite = preload("res://Dynamite.tscn")
 
 enum Weapon {
 	TRADITION,
 	SESAME,
+	FRENCH
+}
+
+enum DynamiteType {
+	NONE,
+	SINGLE,
 	FRENCH
 }
 
@@ -36,10 +43,12 @@ enum Side {
 
 var side = Side.RIGHT
 var weapon = Weapon.TRADITION
+var dynamite_type = DynamiteType.NONE
 var attacking = false
+var dynamite_thrown = false
 
 func check_jump(impulse, prev_velocity):
-	if Input.is_action_just_pressed("ui_up"): # or is_on_wall() to add wall jumps
+	if Input.is_action_just_pressed("jump"): # or is_on_wall() to add wall jumps
 		pre_timer.start()
 	if (not coy_timer.is_stopped()) and (not pre_timer.is_stopped()):
 		pre_timer.stop()
@@ -56,8 +65,8 @@ func _physics_process(delta):
 	velocity.y += GRAVITY
 	velocity.y = check_jump(JUMP_IMPULSE, velocity.y)
 
-	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
-	input_vector.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
+	input_vector.x = Input.get_action_strength("right") - Input.get_action_strength("left")
+	input_vector.y = Input.get_action_strength("down") - Input.get_action_strength("up")
 	input_vector.normalized()
 
 	if input_vector != Vector2.ZERO:
@@ -67,9 +76,15 @@ func _physics_process(delta):
 			turn(Side.RIGHT)
 		elif input_vector.x < 0:
 			turn(Side.LEFT)
+			
+		if not attacking:
+			set_animation("Walk")
 
 	else:
 		velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
+		
+		if velocity.x == 0 and not attacking: 
+			set_animation("Idle")
 
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
@@ -93,30 +108,49 @@ func turn(new_side):
 		side = new_side
 		match side:
 			Side.LEFT:
-				position.x -= 8
+				position.x -= 7
 			Side.RIGHT:
-				position.x += 8
-				print("right")
+				position.x += 7
 
 func _unhandled_input(event):
 	if event.is_action_pressed("attack"):
 		set_animation("Attack")
 		baguette_collision.disabled = false
-		if not attacking and weapon == Weapon.SESAME:
+		if not attacking and (weapon == Weapon.SESAME or weapon == Weapon.FRENCH):
 			var sesame = Sesame.instance()
-			sesame.global_position = sesame_spawn.global_position
+
 			var dirv = Vector2.ZERO
-			if Input.is_action_pressed("ui_down"):
+			if Input.is_action_pressed("down"):
 				dirv = Vector2(1,-1) if side == Side.RIGHT else Vector2(-1, -1)
 			else:
 				dirv = Vector2(0.25,-1) if side == Side.RIGHT else Vector2(-0.25, -1)
-			sesame.velocity = dirv.normalized() * 400
+
+			sesame.config(
+				"sesame",
+				sesame_spawn.global_position,
+				dirv.normalized() * 400,
+				15,
+				10
+			)
+
 			get_parent().add_child(sesame)
 		attacking = true
+	
 	if event.is_action_pressed("test"):
 		weapon = Weapon.SESAME
 		set_animation("Idle")
-
+	
+	if event.is_action_pressed("dynamite") and dynamite_type != DynamiteType.NONE and not dynamite_thrown:
+		dynamite_thrown = true
+		var dynamite = Dynamite.instance()
+		match dynamite_type:
+			DynamiteType.SINGLE:
+				dynamite.call_deferred("set_type", "single")
+			DynamiteType.FRENCH:
+				dynamite.call_deferred("set_type", "french")
+		dynamite.global_position = global_position
+		dynamite.connect("exploded", self, "_on_Dynamite_exploded")
+		get_parent().add_child(dynamite)
 
 func _on_AnimatedSprite_animation_finished():
 	if attacking:
@@ -124,6 +158,21 @@ func _on_AnimatedSprite_animation_finished():
 		baguette_collision.disabled = true
 		attacking = false
 
-
 func _on_Hurtbox_area_entered(area):
 	print("OUCH")
+
+func _on_Dynamite_exploded():
+	dynamite_thrown = false
+
+func loot(type_of_upgrade):
+	match type_of_upgrade:
+		"baguette_sesame":
+			weapon = Weapon.SESAME
+			set_animation("Idle")
+		"baguette_french":
+			weapon = Weapon.FRENCH
+			set_animation("Idle")
+		"dynamite_single":
+			dynamite_type = DynamiteType.SINGLE
+		"dynamite_french":
+			dynamite_type = DynamiteType.FRENCH
