@@ -4,7 +4,7 @@ const GRAVITY = 15
 const FRICTION = 10
 
 onready var my_sprite = $AnimatedSprite
-onready var explosion = $ExplosionHurtbox
+onready var explosion = $ExplosionHitbox
 onready var explosion_collision = $ExplosionHitbox/CollisionShape2D
 onready var explosion_timer = $ExplosionTimer
 

@@ -19,7 +19,7 @@ animations = [ {
 
 [sub_resource type="CapsuleShape2D" id=6]
 radius = 4.0
-height = 104.0
+height = 64.0
 
 [sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 12, 4 )
@@ -38,7 +38,7 @@ frames = SubResource( 5 )
 animation = "Closed"
 
 [node name="TriggerCollision" type="CollisionShape2D" parent="."]
-position = Vector2( 17, -35 )
+position = Vector2( 17, -59 )
 shape = SubResource( 6 )
 
 [node name="Bridge" type="Node2D" parent="."]
@@ -46,13 +46,13 @@ shape = SubResource( 6 )
 [node name="ClosedStaticBody" type="StaticBody2D" parent="."]
 
 [node name="ClosedCollision" type="CollisionShape2D" parent="ClosedStaticBody"]
-position = Vector2( 17, -15 )
+position = Vector2( 17, -19 )
 shape = SubResource( 8 )
 
 [node name="OpenStaticBody" type="StaticBody2D" parent="."]
 
 [node name="OpenCollision" type="CollisionShape2D" parent="OpenStaticBody"]
-position = Vector2( 17, 25 )
+position = Vector2( 17, 29 )
 shape = SubResource( 7 )
 disabled = true
 
