@@ -101,9 +101,9 @@ func turn(new_side):
 		side = new_side
 		match side:
 			Side.LEFT:
-				position.x -= 8
+				position.x -= 7
 			Side.RIGHT:
-				position.x += 8
+				position.x += 7
 
 func _unhandled_input(event):
 	if event.is_action_pressed("attack"):
