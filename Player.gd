@@ -173,7 +173,11 @@ func _on_AnimatedSprite_animation_finished():
 func _on_Hurtbox_area_entered(area):
 	if "damage" in area and area.damage > 0:
 		sfx_hit.play()
-		print("OUCH")
+		Global.hp = Global.hp - area.damage
+	if Global.hp <= 0:
+		Global.win = false
+		Global.finished = true
+		queue_free()
 
 func _on_Dynamite_exploded():
 	dynamite_thrown = false

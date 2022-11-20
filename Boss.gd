@@ -91,7 +91,9 @@ func _on_Hurtbox_area_entered(area):
 		my_sprite.visible = false
 		sfx_death.play()
 		dying = true
-		
+		Global.win = false
+		Global.finished = true
+
 
 func _on_AnimatedSprite_animation_finished():
 	if attacking and not dying:
