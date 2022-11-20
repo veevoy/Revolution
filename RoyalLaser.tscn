@@ -1,22 +1,23 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Projectile.gd" type="Script" id=1]
-[ext_resource path="res://Sprites/Items/bullet.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Items/RoyalLaser.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 1, 1 )
+extents = Vector2( 6, 1.5 )
 
-[node name="Bullet" type="Area2D"]
+[node name="RoyalLaser" type="Area2D"]
 collision_mask = 2
 script = ExtResource( 1 )
 bullet_gravity = 0
 bullet_friction = 0
-hit_owner = "bullet"
+hit_owner = "royal_laser"
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -0.5 )
 shape = SubResource( 4 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
