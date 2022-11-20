@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Level.tscn" type="PackedScene" id=2]
@@ -22,6 +22,7 @@
 [ext_resource path="res://ChgMusic.gd" type="Script" id=20]
 [ext_resource path="res://Sprites/Builds/BossWall.png" type="Texture" id=21]
 [ext_resource path="res://GUI.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Sprites/Scenes/Paris_Sky_Background.png" type="Texture" id=23]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 8.0
@@ -78,29 +79,36 @@ script = ExtResource( 19 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
+[node name="ParallaxLayerCity" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2( -106, -15 )
+motion_scale = Vector2( 0.5, 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayerCity"]
+texture = ExtResource( 23 )
+
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
-position = Vector2( -316, -10 )
+position = Vector2( -345, -9 )
 motion_scale = Vector2( 0.9, 1 )
 motion_mirroring = Vector2( 625, 0 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
 texture = ExtResource( 13 )
 
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
-modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
-position = Vector2( -517, -10 )
-motion_scale = Vector2( 0.9, 1 )
-motion_mirroring = Vector2( 625, 0 )
-
-[node name="Sprite2" type="Sprite" parent="ParallaxBackground/ParallaxLayer2"]
-texture = ExtResource( 13 )
-
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
-position = Vector2( -415, -7 )
+position = Vector2( -495, -7 )
 motion_scale = Vector2( 0.9, 1 )
 motion_mirroring = Vector2( 625, 0 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite3" type="Sprite" parent="ParallaxBackground/ParallaxLayer3"]
 texture = ExtResource( 14 )
@@ -110,21 +118,27 @@ modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
 position = Vector2( -648, -7 )
 motion_scale = Vector2( 0.9, 1 )
 motion_mirroring = Vector2( 625, 0 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite4" type="Sprite" parent="ParallaxBackground/ParallaxLayer4"]
 texture = ExtResource( 14 )
 
 [node name="ParallaxLayer5" type="ParallaxLayer" parent="ParallaxBackground"]
 modulate = Color( 0.588235, 0.588235, 0.588235, 1 )
-position = Vector2( -175, -10 )
+position = Vector2( -156, -10 )
 motion_scale = Vector2( 0.9, 1 )
 motion_mirroring = Vector2( 625, 0 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite5" type="Sprite" parent="ParallaxBackground/ParallaxLayer5"]
 texture = ExtResource( 13 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( -431, 39 )
+position = Vector2( -432, 36 )
 z_index = 2
 __meta__ = {
 "_edit_group_": true
@@ -134,7 +148,7 @@ __meta__ = {
 remote_path = NodePath("../../Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( -431, 39 )
+position = Vector2( -432, 36 )
 current = true
 smoothing_enabled = true
 
@@ -144,10 +158,46 @@ smoothing_enabled = true
 position = Vector2( -29, -23 )
 
 [node name="SwordEnemy2" parent="Enemies" instance=ExtResource( 3 )]
-position = Vector2( 145, -119 )
+position = Vector2( -269, -54 )
+
+[node name="SwordEnemy3" parent="Enemies" instance=ExtResource( 3 )]
+position = Vector2( -689, 36 )
+
+[node name="SwordEnemy4" parent="Enemies" instance=ExtResource( 3 )]
+position = Vector2( -306, 149 )
+
+[node name="SwordEnemy5" parent="Enemies" instance=ExtResource( 3 )]
+position = Vector2( 22, 150 )
+
+[node name="SwordEnemy6" parent="Enemies" instance=ExtResource( 3 )]
+position = Vector2( 261, 150 )
+
+[node name="SwordEnemy7" parent="Enemies" instance=ExtResource( 3 )]
+position = Vector2( -27, 30 )
+
+[node name="SwordEnemy8" parent="Enemies" instance=ExtResource( 3 )]
+position = Vector2( 269, 37 )
+
+[node name="SwordEnemy9" parent="Enemies" instance=ExtResource( 3 )]
+position = Vector2( 136, -123 )
+
+[node name="SwordEnemy10" parent="Enemies" instance=ExtResource( 3 )]
+position = Vector2( -112, 70 )
 
 [node name="HarquebusEnemy" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( -9, 32 )
+position = Vector2( -112, 148 )
+
+[node name="HarquebusEnemy2" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( 160, 149 )
+
+[node name="HarquebusEnemy3" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( -22, -416 )
+
+[node name="HarquebusEnemy4" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( -664, -45 )
+
+[node name="HarquebusEnemy5" parent="Enemies" instance=ExtResource( 17 )]
+position = Vector2( -664, -45 )
 
 [node name="Boss" parent="Enemies" instance=ExtResource( 18 )]
 position = Vector2( -103, 372 )
@@ -359,7 +409,6 @@ shape = SubResource( 11 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Objects/Loots/FloatingLoot4"]
 frames = SubResource( 10 )
-frame = 2
 playing = true
 
 [node name="BossWall" type="StaticBody2D" parent="."]
