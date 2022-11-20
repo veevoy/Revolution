@@ -11,6 +11,5 @@ func _ready():
 		french_sprite.visible = true
 
 func _on_Hurtbox_area_entered(area):
-	print(area, area.hit_owner)
 	if "hit_owner" in area and (area.hit_owner == vulnerability or (area.hit_owner == "french_dynamite" and vulnerability == "single_dynamite")):
 		queue_free()

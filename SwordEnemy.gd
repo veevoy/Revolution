@@ -73,7 +73,7 @@ func turn(new_side):
 
 func _on_Hurtbox_area_entered(area):
 	if health > 0:
-		health -= 1
+		health -= area.damage
 	else:
 		queue_free()
 
