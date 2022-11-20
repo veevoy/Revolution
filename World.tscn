@@ -332,7 +332,7 @@ shape = SubResource( 11 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Objects/Loots/FloatingLoot4"]
 frames = SubResource( 10 )
-frame = 5
+frame = 4
 playing = true
 
 [node name="Level" parent="." instance=ExtResource( 2 )]
