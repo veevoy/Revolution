@@ -341,7 +341,7 @@ shape = SubResource( 11 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Objects/Loots/FloatingLoot4"]
 frames = SubResource( 10 )
-frame = 1
+frame = 5
 playing = true
 
 [node name="Level" parent="." instance=ExtResource( 2 )]
@@ -359,9 +359,8 @@ tile_data = PoolIntArray( -3932169, 10, 6, -3932168, 10, 1, -3932167, 10, 2, -39
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 15 )
 volume_db = -18.0
-autoplay = true
 
-[node name="BossMusic" type="AudioStreamPlayer2D" parent="."]
+[node name="BossMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 16 )
 volume_db = -14.0
 
