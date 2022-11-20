@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Sprites/placeholder enemy.png" type="Texture" id=1]
 [ext_resource path="res://SwordEnemy.gd" type="Script" id=2]
@@ -7,6 +7,9 @@
 [ext_resource path="res://Sprites/Mobs/SwordGuard/Idle/SwordGuard_Idle-Sheet.png" type="Texture" id=5]
 [ext_resource path="res://Hurtbox.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Hitbox.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Sounds/SFX/Hit.mp3" type="AudioStream" id=8]
+[ext_resource path="res://Sounds/SFX/Swing_Baguette.mp3" type="AudioStream" id=9]
+[ext_resource path="res://Sounds/SFX/Death.mp3" type="AudioStream" id=10]
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 3 )
@@ -134,6 +137,7 @@ script = ExtResource( 2 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 5 )
 animation = "Walk"
+frame = 3
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -175,7 +179,6 @@ shape = SubResource( 28 )
 [node name="Hurtbox" parent="." instance=ExtResource( 6 )]
 position = Vector2( -3, 4 )
 collision_layer = 4
-collision_mask = 0
 hurt_owner = "enemy"
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
@@ -185,10 +188,20 @@ shape = SubResource( 29 )
 wait_time = 0.2
 one_shot = true
 
+[node name="Swing" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 9 )
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 8 )
+
+[node name="Death" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 10 )
+
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 [connection signal="area_entered" from="DetectionZone" to="." method="_on_DetectionZone_area_entered"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="timeout" from="ResponseTimer" to="." method="_on_ResponseTime_timeout"]
+[connection signal="finished" from="Death" to="." method="_on_Death_finished"]
 
 [editable path="Sword"]
 [editable path="Hurtbox"]

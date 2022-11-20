@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/baguette_francaise.mp3-aa7361cf23101ee9419817b795a02bf5.mp3str"
+
+[deps]
+
+source_file="res://Sounds/SFX/baguette_francaise.mp3"
+dest_files=[ "res://.import/baguette_francaise.mp3-aa7361cf23101ee9419817b795a02bf5.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

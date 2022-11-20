@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Sprites/Builds/BridgeClosed.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/Builds/BridgeOpened.png" type="Texture" id=2]
 [ext_resource path="res://Builds/Bridge.gd" type="Script" id=3]
+[ext_resource path="res://Sounds/SFX/EXPLOSION.mp3" type="AudioStream" id=4]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -56,5 +57,9 @@ shape = SubResource( 4 )
 position = Vector2( 13, 41 )
 shape = SubResource( 3 )
 disabled = true
+
+[node name="SFXTriggered" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( -43, 41 )
+stream = ExtResource( 4 )
 
 [connection signal="area_entered" from="." to="." method="_on_Bridge_area_entered"]
